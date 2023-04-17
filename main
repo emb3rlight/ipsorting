@@ -1,0 +1,15 @@
+import csv
+from netaddr import IPNetwork
+# Read the list of IP addresses with prefix notation from a CSV file
+with open('unsorted_ipv4_addresses.csv', 'r') as input_file:
+reader = csv.reader(input_file)
+ip_list = [row[0] for row in reader]
+# Convert the list of IP addresses to a list of IPNetwork objects
+ip_network_list = [IPNetwork(ip) for ip in ip_list]
+# Sort the list of IPNetwork objects
+ip_network_list.sort()
+# Write the sorted list of IP addresses with prefix notation to a CSV file
+with open('sorted_ipv4_addresses.csv', 'w', newline='') as output_file:
+writer = csv.writer(output_file)
+for ip in ip_network_list:
+writer.writerow([ip.cidr])
